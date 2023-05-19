@@ -1,10 +1,10 @@
 # Leetcode-Python6
-## 454. 4 Sum II, 383. Ransom Note, 15. 3Sum
+## 454. 4 Sum II, 383. Ransom Note, 15. 3Sum, 18. 4Sum
 
 May 18, 2023  4h
 
 The sixth day for Hash Table 2. Today we will learn more about the Hash Table.\
-The challenges today are about ~~need  to complete later~~
+The challenges today are about when to use has table and two pointers.
 
 ## 454. 4 Sum II
 [leetcode](https://leetcode.com/problems/4sum-ii/)\
@@ -54,7 +54,7 @@ class Solution(object):
 
 ## 383. Ransom Note
 [leetcode](https://leetcode.com/problems/ransom-note/)\
-[reading](https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0383.%E8%B5%8E%E9%87%91%E4%BF%A1.md)\
+[reading](https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0383.%E8%B5%8E%E9%87%91%E4%BF%A1.md)
 ```python
 # Ways 1: use array
 class Solution:
@@ -128,7 +128,45 @@ class Solution:
         return result
 ```
 
-
+## 18. 4Sum
+[leetcode](https://leetcode.com/problems/4sum/)\
+[reading](https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0018.%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C.md)\
+[video](https://www.bilibili.com/video/BV1DS4y147US/?spm_id_from=333.788&vd_source=63f26efad0d35bcbb0de794512ac21f3)\
+Same as the 3 sum above, here we use **two pointers** and one more for loop to solve the question.
+```python
+# ways 1: use two pointers
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        nums.sort()
+        n = len(nums)
+        result = []
+        for i in range(n):
+            if nums[i] > target and nums[i] > 0 and target > 0:# 剪枝（可省）
+                break
+            if i > 0 and nums[i] == nums[i-1]:# 去重
+                continue
+            for j in range(i+1, n):
+                if nums[i] + nums[j] > target and target > 0: #剪枝（可省）
+                    break
+                if j > i+1 and nums[j] == nums[j-1]: # 去重
+                    continue
+                left, right = j+1, n-1
+                while left < right:
+                    s = nums[i] + nums[j] + nums[left] + nums[right]
+                    if s == target:
+                        result.append([nums[i], nums[j], nums[left], nums[right]])
+                        while left < right and nums[left] == nums[left+1]:
+                            left += 1
+                        while left < right and nums[right] == nums[right-1]:
+                            right -= 1
+                        left += 1
+                        right -= 1
+                    elif s < target:
+                        left += 1
+                    else:
+                        right -= 1
+        return result
+```
 
 
 
