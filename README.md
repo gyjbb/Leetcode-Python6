@@ -141,14 +141,14 @@ class Solution:
         n = len(nums)
         result = []
         for i in range(n):
-            if nums[i] > target and nums[i] > 0 and target > 0:# 剪枝（可省）
+            if nums[i] > target and nums[i] > 0 and target > 0:# 一级剪枝（可省）
                 break
-            if i > 0 and nums[i] == nums[i-1]:# 去重
+            if i > 0 and nums[i] == nums[i-1]:# 一级去重
                 continue
             for j in range(i+1, n):
-                if nums[i] + nums[j] > target and target > 0: #剪枝（可省）
+                if nums[i] + nums[j] > target and target > 0: # 二级剪枝（可省）
                     break
-                if j > i+1 and nums[j] == nums[j-1]: # 去重
+                if j > i+1 and nums[j] == nums[j-1]: # 二级去重
                     continue
                 left, right = j+1, n-1
                 while left < right:
